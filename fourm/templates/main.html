@@ -1,4 +1,8 @@
 {% extends "base/base.html" %}
+{%  block style %}
+{{ super() }}
+<link rel="stylesheet" href="{{ scss_url('main') }}" type="text/css"/>
+{% endblock style %}
 {% block main %}
 <h1> this is main page </h1>
 {% endblock main %}

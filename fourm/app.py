@@ -12,6 +12,7 @@ import blueprints
 import models as m
 from models import db
 from util.ext.sqlalchemy_ext import engine_url
+from util.middlewares.scssmiddleware import ScssMiddleware
 
 def create_app(config):
     app = Flask(__name__)
@@ -26,5 +27,20 @@ def create_app(config):
 
     # Blueprints
     blueprints.register_blueprints(app)
+
+    # Sass
+    with app.app_context():
+        app.scss = ScssMiddleware(scss_dir=resource.get_resource('scss'),
+                                  css_dir=os.path.join(tempfile.gettempdir(),
+                                                       'fourm_gun', 'css'),
+                                  app=app)
+    # Jinja configurations
+    @app.context_processor
+    def inject_globals():
+        return {
+            'm': m,
+            'models': m,
+            'db': db,
+        }
 
     return app
