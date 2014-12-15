@@ -11,6 +11,7 @@ requires = [
     'SQLAlchemy',
     'Flask-SQLAlchemy',
     'pyScss',
+    'python-instagram',
 ]
 
 setup(

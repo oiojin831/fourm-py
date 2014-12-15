@@ -22,9 +22,11 @@
 <body>
 {% include "base/header.html" %}
 {% block body %}
-<div id="main">
-    {% block main %}
-    {% endblock main %}
+<div class="container" id="main">
+    <div class="row">
+        {% block main %}
+        {% endblock main %}
+    </div>
 </div>
 {% endblock body %}
 

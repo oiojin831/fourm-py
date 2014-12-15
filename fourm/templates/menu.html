@@ -4,5 +4,9 @@
 <link rel="stylesheet" href="{{ scss_url('menu') }}" type="text/css"/>
 {% endblock style %}
 {% block main %}
-<h1> hello world </h1>
+<ul class="list-group">
+    {% for list in li %}
+    <li class="list-group-item"><img src="{{ list['low_resolution'] }}" /></li>
+    {% endfor %}
+</ul>
 {% endblock main %}
