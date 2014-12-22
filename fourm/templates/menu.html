@@ -11,7 +11,9 @@
                 <img src="{{ list['low_resolution'] }}" />
             </a>
             <div class="media-body">
-                <h1>{{ list['text'] }}</h1>
+                <h1>{{ list['text'][0] }}</h1>
+                <h1>{{ list['text'][1] }}</h1>
+                <h1>{{ list['text'][2] }}</h1>
             </div>
         </li>
     {% endfor %}

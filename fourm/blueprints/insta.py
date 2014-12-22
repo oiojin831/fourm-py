@@ -20,7 +20,7 @@ def to_default(media):
     if media.caption is not None:
         if has_menu(media.caption.text):
             return dict(
-                text=None if media.caption is None else media.caption.text,
+                text=None if media.caption is None else splitToHashes(media.caption.text),
                 thumbnail=media.images['thumbnail'].url,
                 low_resolution=media.images['low_resolution'].url,
                 standard_resolution=media.images['standard_resolution'].url
@@ -37,15 +37,34 @@ def has_menu(caption_text):
     else:
         return False
 
+def splitToHashes(text):
+    list = [splitToHashBang(text), splitToHashHash(text), splitToHashDollar(text)]
+    return list
+
+def splitToHashBang(text):
+    bang = re.findall(r"#!\w+", text)
+    print bang
+    return bang
+
+def splitToHashDollar(text):
+    dollar = re.findall(r"#$\w+", text)
+    return dollar
+
+def splitToHashHash(text):
+    hash = re.findall(r"##\w+", text)
+    return hash
+
+
+
 @blueprint.route('/<username>/menu')
 def insta(username):
     user_id=api.user_search(q=username)[0].id
-    print user_id
+    # print user_id
     recent_media, _next = api.user_recent_media(user_id=user_id, count=20)
     li = remove_none(map(to_default, recent_media))
     while _next:
         recent_media, _next = api.user_recent_media(with_next_url=_next)
         partial_li = remove_none(map(to_default, recent_media))
         li = li + partial_li
-        print li
+       # print li
     return render_template('menu.html', li=li)
