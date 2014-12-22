@@ -8,10 +8,7 @@ from flask import Blueprint, abort, send_file, url_for
 
 def _convert(src, dst):
     css = Scss()
-    with codecs.open(src, 'r', encoding='utf-8') as f:
-        source = f.read()
-
-    output = css.compile(source)
+    output = css.compile(scss_file=src)
 
     with codecs.open(dst, 'w', encoding='utf-8') as f:
         f.write(output)
@@ -85,5 +82,6 @@ class ScssMiddleware(object):
             path = scss_path
         path_components = posixpath.split(path)
         css_uri = posixpath.join(*path_components) + '.css'
+        kwargs['css_path'] = css_uri
 
-        return url_for(self.blueprint.name + '.css', css_path=css_uri)
+        return url_for(self.blueprint.name + '.css', **kwargs)

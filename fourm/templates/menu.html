@@ -4,9 +4,16 @@
 <link rel="stylesheet" href="{{ scss_url('menu') }}" type="text/css"/>
 {% endblock style %}
 {% block main %}
-<ul class="list-group">
+<ul class="media-list">
     {% for list in li %}
-    <li class="list-group-item"><img src="{{ list['low_resolution'] }}" /></li>
+        <li class="media">
+            <a class="media-left media-middle" href="#">
+                <img src="{{ list['low_resolution'] }}" />
+            </a>
+            <div class="media-body">
+                <h1>{{ list['text'] }}</h1>
+            </div>
+        </li>
     {% endfor %}
 </ul>
 {% endblock main %}

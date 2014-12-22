@@ -32,7 +32,7 @@ def remove_none(li):
     return [x for x in li if x is not None]
 
 def has_menu(caption_text):
-    if re.findall(r"#menu", caption_text):
+    if re.findall(r"^#!|#$|##", caption_text):
         return True
     else:
         return False
@@ -40,9 +40,12 @@ def has_menu(caption_text):
 @blueprint.route('/<username>/menu')
 def insta(username):
     user_id=api.user_search(q=username)[0].id
-    recent_media, _next = api.user_recent_media(user_id=user_id, count=20)#, max_id='849758670443060047_253976093')
-
-    li = map(to_default, recent_media)
-    li = remove_none(li)
-    print _next
+    print user_id
+    recent_media, _next = api.user_recent_media(user_id=user_id, count=20)
+    li = remove_none(map(to_default, recent_media))
+    while _next:
+        recent_media, _next = api.user_recent_media(with_next_url=_next)
+        partial_li = remove_none(map(to_default, recent_media))
+        li = li + partial_li
+        print li
     return render_template('menu.html', li=li)
