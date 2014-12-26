@@ -16,6 +16,10 @@ from util.middlewares.scssmiddleware import ScssMiddleware
 
 def create_app(config):
     app = Flask(__name__)
+
+    # Secret key for session //todo need to move somewhere
+    app.secret_key = "hahah ahahah0"
+
     if isinstance(config, collections.Mapping):
         app.config.update(config)
     else:

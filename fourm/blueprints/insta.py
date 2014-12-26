@@ -11,7 +11,10 @@ blueprint = Blueprint('insta', __name__)
 
 access_token='76009.ff7dd43.dfc4f62be5ff42d08e2adb685e40e2ed'
 api_at = InstagramAPI(access_token=access_token)
-api = InstagramAPI(client_id='ff7dd432a30a4d178e1ad94f9baaa745', client_secret='acc0a7ce76464ab5913647a63375a6d3')
+api = InstagramAPI(
+        client_id='ff7dd432a30a4d178e1ad94f9baaa745',
+        client_secret='acc0a7ce76464ab5913647a63375a6d3'
+        )
 # user_id = 76009
 # recent_media, _next = api.user_recent_media(user_id=user_id, count=20)
 
@@ -25,6 +28,7 @@ def to_default(media):
                 low_resolution=media.images['low_resolution'].url,
                 standard_resolution=media.images['standard_resolution'].url
             )
+
 def wrap_json(li):
     return json.dumps(dict(data=li))
 
